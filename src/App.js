@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
-import Home from './components/Home';
-import About from './components/About';
+import { BrowserRouter, Link } from 'react-router-dom';
+import Router from './components/Router';
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <Link to='/'>Home</Link>
         <Link to='/about'>About</Link>
 
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/about' component={About} />
-        </Switch>
-      </Router>
+        <Router />
+      </BrowserRouter>
     );
   }
 }
