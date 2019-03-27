@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import Header from './components/Header';
 import Router from './components/Router';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Link to='/'>Home</Link>
-        <Link to='/about'>About</Link>
-
+        <Header />
         <Router />
       </BrowserRouter>
     );
