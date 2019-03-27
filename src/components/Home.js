@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Segment, Header, Button, Grid, Image, Container } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import homeImage from '../images/homeImage.jpeg';
 
 class Home extends Component {
   render() {
@@ -35,7 +36,7 @@ class Home extends Component {
                 </p>
               </Grid.Column>
               <Grid.Column floated='right' width={6}>
-                <Image bordered rounded size='large' src='' />
+                <Image bordered rounded size='large' src={homeImage} />
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
