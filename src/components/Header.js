@@ -7,8 +7,8 @@ class Header extends Component {
     return (
       <Menu inverted style={{ marginBottom: 0 }} >
         <Container>
-            <Menu.Item as={Link} to='/'>Home</Menu.Item>
-            <Menu.Item as={Link} to='/about'>About</Menu.Item>
+          <Menu.Item as={Link} to='/'>Home</Menu.Item>
+          <Menu.Item as={Link} to='/about'>About</Menu.Item>
         </Container>
       </Menu>
     );
