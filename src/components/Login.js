@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Segment, Grid, Header, Form, Button, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { userActions } from '../actions';
 
 class Login extends Component {
   constructor(props) {
@@ -20,7 +22,8 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    let { email, password } = this.state;
+    this.props.onLoginButton(email, password);
   }
 
   render() {
@@ -59,4 +62,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = store => ({
+  loggedUser: store.mainState.loggedUser
+});
+
+const mapDispatchToProps = dispatch => ({
+  onLoginButton: (email, password) => { dispatch(userActions.loginButton(email, password)) }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
