@@ -7,3 +7,9 @@ export const loginButton = (email, password) => {
     value: email
   }
 }
+
+export const logoutButton = () => {
+  return {
+    type: actionTypes.LOGOUT
+  }
+}
