@@ -11,7 +11,12 @@ class Header extends Component {
           <Menu.Item as={Link} to='/'>Home</Menu.Item>
           <Menu.Item as={Link} to='/about'>About</Menu.Item>
           <Menu.Item position='right'>
-            <Button as={Link} to='/login' inverted>Log In</Button>
+            <Button as={Link} to='/login' inverted>
+              Log In
+            </Button>
+            <Button as={Link} to='/register' inverted primary style={{ marginLeft: '0.5em' }}>
+              Register
+            </Button>
           </Menu.Item>
         </Container>
       </Menu>

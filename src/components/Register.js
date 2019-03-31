@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Segment, Grid, Header, Form, Button, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-class Login extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
       email: '',
-      password: ''
+      password: '',
+      rePassword: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -29,9 +31,16 @@ class Login extends Component {
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' textAlign='center'>
-              Log In
+              Register
             </Header>
             <Form size='large' onSubmit={this.handleSubmit}>
+              <Form.Input
+                name='name'
+                fluid
+                icon='user'
+                iconPosition='left'
+                placeholder='Full name'
+                onChange={this.handleChange} />
               <Form.Input
                 name='email'
                 fluid
@@ -47,10 +56,18 @@ class Login extends Component {
                 placeholder='Password'
                 type='password'
                 onChange={this.handleChange} />
-              <Button fluid size='large' type='submit'>Log In</Button>
+              <Form.Input
+                name='rePassword'
+                fluid
+                icon='lock'
+                iconPosition='left'
+                placeholder='Re-type Password'
+                type='password'
+                onChange={this.handleChange} />
+              <Button fluid size='large' type='submit'>Register</Button>
             </Form>
             <Message>
-              New here? <Link to='/register'>Register now</Link>
+              Already registered? <Link to='/login'>Log In</Link>
             </Message>
           </Grid.Column>
         </Grid>
@@ -59,4 +76,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Register;
