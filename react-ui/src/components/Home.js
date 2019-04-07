@@ -4,6 +4,34 @@ import { Link } from 'react-router-dom';
 import homeImage from '../images/homeImage.jpeg';
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      message: ''
+    };
+  }
+
+  componentDidMount() {
+    fetch('/api')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then(json => {
+      this.setState({
+        message: json.message
+      });
+    })
+    .catch(e => {
+      this.setState({
+        message: 'api call failed'
+      });
+    });
+  }
+
   render() {
     return (
       <Container fluid>
@@ -22,7 +50,7 @@ class Home extends Component {
             <Grid.Row>
               <Grid.Column width={8}>
                 <Header as='h3' style={{ fontSize: '2em' }}>
-                  We Help Racing Drivers
+                  We Help Racing Drivers {this.state.message}
                 </Header>
                 <p style={{ fontSize: '1.33em' }}>
                   We can give your racing team the ability to track races.
