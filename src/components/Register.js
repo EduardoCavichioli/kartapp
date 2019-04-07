@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Segment, Grid, Header, Form, Button, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { userActions } from '../actions';
 
 class Register extends Component {
   constructor(props) {
@@ -9,7 +10,14 @@ class Register extends Component {
       name: '',
       email: '',
       password: '',
-      rePassword: ''
+      confirmPassword: '',
+
+      //validation
+      nameError: false,
+      emailError: false,
+      passwordError: false,
+      confirmPasswordError: false,
+      passwordMatchError: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,10 +30,45 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    let error = false;
+
+    const userInfo = Object.assign({
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password
+    });
+
+    console.log(userInfo);
+  
+    const url = 'https://radiant-everglades-30361.herokuapp.com/api/users';
+  
+    fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userInfo)
+    })
+    .then(response => response.json())
+    .then(response => console.log('Success', JSON.stringify(response)))
+    .catch(error => console.error('Error:', error));
+
   }
 
   render() {
+    let { name, 
+          email, 
+          password, 
+          confirmPassword,
+          nameError,
+          emailError,
+          passwordError,
+          confirmPasswordError,
+          passwordMatchError
+        } = this.state;
+
+    let disabledSubmit = !name || !email || !password || !confirmPassword;
     return (
       <Segment style={{ padding: '4em 0em' }} vertical>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
@@ -40,14 +83,16 @@ class Register extends Component {
                 icon='user'
                 iconPosition='left'
                 placeholder='Full name'
-                onChange={this.handleChange} />
+                onChange={this.handleChange} 
+                error = {nameError} />
               <Form.Input
                 name='email'
                 fluid
                 icon='mail'
                 iconPosition='left'
                 placeholder='E-mail address'
-                onChange={this.handleChange} />
+                onChange={this.handleChange}
+                error={emailError} />
               <Form.Input
                 name='password'
                 fluid
@@ -55,16 +100,18 @@ class Register extends Component {
                 iconPosition='left'
                 placeholder='Password'
                 type='password'
-                onChange={this.handleChange} />
+                onChange={this.handleChange}
+                error={passwordError || passwordMatchError} />
               <Form.Input
-                name='rePassword'
+                name='confirmPassword'
                 fluid
                 icon='lock'
                 iconPosition='left'
-                placeholder='Re-type Password'
+                placeholder='Confirm Password'
                 type='password'
-                onChange={this.handleChange} />
-              <Button fluid size='large' type='submit'>Register</Button>
+                onChange={this.handleChange}
+                error={confirmPasswordError || passwordMatchError} />
+              <Button fluid size='large' type='submit' disabled={disabledSubmit}>Register</Button>
             </Form>
             <Message>
               Already registered? <Link to='/login'>Log In</Link>
