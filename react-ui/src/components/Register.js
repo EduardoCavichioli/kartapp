@@ -17,7 +17,12 @@ class Register extends Component {
       emailError: false,
       passwordError: false,
       confirmPasswordError: false,
-      passwordMatchError: false
+      passwordMatchError: false,
+
+      //api
+      hasSubmitted: false,
+      hasRegistered: false,
+      submitMessage: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,17 +36,13 @@ class Register extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let error = false;
-
+    let status = false;
+    
     const userInfo = Object.assign({
       name: this.state.name,
       email: this.state.email,
       password: this.state.password
-    });
-
-    console.log(userInfo);
-  
-    
-  
+    });  
     fetch('/api/users', {
       method: 'POST',
       headers: {
@@ -50,9 +51,22 @@ class Register extends Component {
       body: JSON.stringify(userInfo)
     })
     .then(response => response.json())
-    .then(response => console.log('Success', JSON.stringify(response)))
-    .catch(error => console.error('Error:', error));
-
+    .then(response => {
+      console.log('Success', JSON.stringify(response));
+      this.setState({
+        hasSubmitted: true,
+        hasRegistered: true,
+        submitMessage: 'Register Success'
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      this.setState({
+        hasSubmitted: true,
+        hasRegistered: false,
+        submitMessage: 'Register Failed'
+      })
+    });
   }
 
   render() {
@@ -75,6 +89,9 @@ class Register extends Component {
             <Header as='h2' textAlign='center'>
               Register
             </Header>
+            <Message hidden={!this.state.hasSubmitted} error={!this.state.hasRegistered} success={this.state.hasRegistered}>
+              {this.state.submitMessage}
+            </Message>
             <Form size='large' onSubmit={this.handleSubmit}>
               <Form.Input
                 name='name'
