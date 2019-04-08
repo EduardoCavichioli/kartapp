@@ -8,12 +8,12 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      message: ''
+      message: []
     };
   }
 
   componentDidMount() {
-    fetch('/api')
+    fetch('/api/users')
     .then(response => {
       if (!response.ok) {
         throw new Error(response.status);
@@ -22,7 +22,7 @@ class Home extends Component {
     })
     .then(json => {
       this.setState({
-        message: json.message
+        message: json
       });
     })
     .catch(e => {
@@ -33,6 +33,7 @@ class Home extends Component {
   }
 
   render() {
+    console.log(this.state.message);
     return (
       <Container fluid>
         <Segment textAlign='center' inverted vertical>
@@ -50,7 +51,7 @@ class Home extends Component {
             <Grid.Row>
               <Grid.Column width={8}>
                 <Header as='h3' style={{ fontSize: '2em' }}>
-                  We Help Racing Drivers {this.state.message}
+                  We Help Racing Drivers
                 </Header>
                 <p style={{ fontSize: '1.33em' }}>
                   We can give your racing team the ability to track races.

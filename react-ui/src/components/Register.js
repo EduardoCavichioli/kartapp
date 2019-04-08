@@ -40,11 +40,10 @@ class Register extends Component {
 
     console.log(userInfo);
   
-    const url = 'https://radiant-everglades-30361.herokuapp.com/api/users';
+    
   
-    fetch(url, {
+    fetch('/api/users', {
       method: 'POST',
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
