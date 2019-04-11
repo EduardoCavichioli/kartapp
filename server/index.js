@@ -59,10 +59,30 @@ app.post('/api/users', (req, res) => {
   }
 });
 
-app.get('/api', (req, res) => {
-  res.set('Content-Type', 'application/json');
-  res.send('{"message":"Hello from the custom server!"}');
-});
+app.post('/api/login', (req, res) => {
+  if (!req.body.email || !req.body.password) {
+    handleError(res, 'No login', 'Provide valid', 400);
+  } else {
+    let emailValue = req.body.email;
+    let passValue = req.body.password;
+    db.collection(USER_COLLECTION).findOne({ email: emailValue }, (err, doc) => {
+      if (err) {
+        handleError(res, err.message, 'Failed to find');
+      } else {
+        if (doc) {
+          if (doc.password === passValue) {
+            console.log(`Login success for user ${emailValue}`);
+            res.status(201).json({ value: doc.name });
+          } else {
+            handleError(res, 'Invalid password', 'Invalid Password', 201);
+          }
+        } else {
+          handleError(res, 'User not found', 'User not found', 201);
+        }
+      }
+    });
+  }
+})
 
 app.get('*', function (request, response) {
   response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));

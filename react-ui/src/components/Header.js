@@ -17,7 +17,7 @@ class Header extends Component {
   }
 
   render() {
-    let { loggedUser, isLogged } = this.props;
+    let { loginMessage, isLogged } = this.props;
     return (
       <Segment vertical inverted>
         <Menu style={{ marginBottom: 0 }} inverted>
@@ -26,7 +26,7 @@ class Header extends Component {
             <Menu.Item as={Link} to='/about'>About</Menu.Item>
             {(isLogged) ?
               <Menu.Item position='right'>
-                <span>Hello {loggedUser}</span>
+                <span>Hello {loginMessage}</span>
                 <Button inverted onClick={this.handleLogOut} style={{ marginLeft: '0.5em' }}>
                   Log Out
                 </Button>
@@ -50,7 +50,8 @@ class Header extends Component {
 
 const mapStateToProps = store => ({
   loggedUser: store.mainState.loggedUser,
-  isLogged: store.mainState.isLogged
+  isLogged: store.mainState.isLogged,
+  loginMessage: store.mainState.loginMessage
 });
 
 const mapDispatchToProps = dispatch => ({

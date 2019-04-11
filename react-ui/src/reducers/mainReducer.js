@@ -2,7 +2,8 @@ import * as actionTypes from '../helpers/actionTypes';
 
 const initialState = {
   loggedUser: '',
-  isLogged: false
+  isLogged: false,
+  loginMessage: ''
 }
 
 export const mainReducer = (state = initialState, action) => {
@@ -10,14 +11,16 @@ export const mainReducer = (state = initialState, action) => {
     case actionTypes.LOGIN:
       return {
         ...state,
-        loggedUser: action.value,
-        isLogged: true
+        loggedUser: action.email,
+        isLogged: action.loginStatus,
+        loginMessage: action.loginMessage
       }
     case actionTypes.LOGOUT:
       return {
         ...state,
         loggedUser: '',
-        isLogged: false
+        isLogged: false,
+        loginMessage: ''
       }
     default:
       return state;

@@ -9,7 +9,8 @@ class Login extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      submitted: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,9 +25,13 @@ class Login extends Component {
     event.preventDefault();
     let { email, password } = this.state;
     this.props.onLoginButton(email, password);
+    this.setState({
+      submitted: true
+    })
   }
 
   render() {
+    let { isLogged, loginMessage } = this.props;
     return (
       <Segment style={{ padding: '4em 0em' }} vertical>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
@@ -34,6 +39,9 @@ class Login extends Component {
             <Header as='h2' textAlign='center'>
               Log In
             </Header>
+            <Message hidden={!this.state.submitted} error={!isLogged} success={isLogged}>
+              {loginMessage}
+            </Message>
             <Form size='large' onSubmit={this.handleSubmit}>
               <Form.Input
                 name='email'
@@ -63,7 +71,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = store => ({
-  loggedUser: store.mainState.loggedUser
+  isLogged: store.mainState.isLogged,
+  loginMessage: store.mainState.loginMessage
 });
 
 const mapDispatchToProps = dispatch => ({
