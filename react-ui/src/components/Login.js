@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Segment, Grid, Header, Form, Button, Message } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
 
@@ -24,10 +24,11 @@ class Login extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let { email, password } = this.state;
-    this.props.onLoginButton(email, password);
+    const { history } = this.props;
+    this.props.onLoginButton(history, email, password);
     this.setState({
       submitted: true
-    })
+    });
   }
 
   render() {
@@ -76,7 +77,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoginButton: (email, password) => { dispatch(userActions.loginButton(email, password)) }
+  onLoginButton: (history, email, password) => { dispatch(userActions.loginButton(history, email, password)) }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

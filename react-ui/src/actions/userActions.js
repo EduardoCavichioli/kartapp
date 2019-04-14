@@ -1,6 +1,6 @@
 import * as actionTypes from '../helpers/actionTypes';
 
-export const loginButton = (email, password) => (dispatch) => {
+export const loginButton = (history, email, password) => (dispatch) => {
   console.log(email, password);
   fetch('/api/login', {
     method: 'POST',
@@ -32,6 +32,7 @@ export const loginButton = (email, password) => (dispatch) => {
       loginStatus: loginStatus,
       loginMessage: loginMessage
     });
+    history.push('/');
   })
   .catch(error => {
     console.error('Error:', error);
