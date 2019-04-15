@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Card, Segment } from 'semantic-ui-react';
+import { Card, Segment, Dimmer, Loader } from 'semantic-ui-react';
 
 class Champ extends Component {
   constructor(props) {
     super(props);
     this.state = {
       message: '',
-      championships: []
+      championships: [],
+      loading: false
     }
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
     if (!this.props.loggedUserID) {
       this.props.history.push('/login');
     } else {
@@ -25,21 +27,25 @@ class Champ extends Component {
       })
       .then(json => {
         this.setState({
-          championships: json
+          championships: json,
+          loading: false
         })
       })
       .catch(e => {
         this.setState({
-          message: 'api call failed'
+          message: 'api call failed',
+          loading: false
         });
       });
     }
   }
 
   render() {
-    console.log(this.state.championships);
     return (
       <Segment vertical>
+        <Dimmer active={this.state.loading}>
+          <Loader>Loading Races</Loader>
+        </Dimmer>
         <Card.Group centered>
           {this.state.championships.map(champ => 
             <Card key={champ._id}>
