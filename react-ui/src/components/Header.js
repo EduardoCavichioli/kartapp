@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Segment, Menu, Container, Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
 
@@ -14,6 +14,7 @@ class Header extends Component {
   handleLogOut(event) {
     event.preventDefault();
     this.props.onLogoutButton();
+    this.props.history.push('/');
   }
 
   render() {
@@ -23,6 +24,10 @@ class Header extends Component {
         <Menu style={{ marginBottom: 0 }} inverted>
           <Container>
             <Menu.Item as={Link} to='/'>Home</Menu.Item>
+            {(isLogged) ? 
+              <Menu.Item as={Link} to='/championships'>Championships</Menu.Item> :
+              ''
+            }
             <Menu.Item as={Link} to='/about'>About</Menu.Item>
             {(isLogged) ?
               <Menu.Item position='right'>
@@ -58,4 +63,4 @@ const mapDispatchToProps = dispatch => ({
   onLogoutButton: () => dispatch(userActions.logoutButton())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
