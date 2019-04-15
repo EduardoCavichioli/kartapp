@@ -83,7 +83,7 @@ app.post('/api/login', (req, res) => {
         if (doc) {
           if (doc.password === passValue) {
             console.log(`Login success for user ${emailValue}`);
-            res.status(201).json({ value: doc.name });
+            res.status(201).json({ value: doc.name, id: doc._id });
           } else {
             handleError(res, 'Invalid password', 'Invalid Password', 201);
           }
