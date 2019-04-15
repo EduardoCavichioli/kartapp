@@ -5,6 +5,7 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Router from './Router';
+import Champ from './Champ';
 
 export {
     About,
@@ -13,5 +14,6 @@ export {
     Home,
     Login,
     Register,
-    Router
+    Router,
+    Champ
 }

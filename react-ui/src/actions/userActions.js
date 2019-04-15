@@ -1,7 +1,6 @@
 import * as actionTypes from '../helpers/actionTypes';
 
 export const loginButton = (history, email, password) => (dispatch) => {
-  console.log(email, password);
   fetch('/api/login', {
     method: 'POST',
     headers: {
@@ -16,23 +15,27 @@ export const loginButton = (history, email, password) => (dispatch) => {
   .then(response => {
     let loginStatus = false;
     let loginMessage = '';
+    let userID = '';
     console.log('Success', JSON.stringify(response));
 
     if (response.value) {
       loginStatus = true;
       loginMessage = response.value;
+      userID = response.id;
     } else {
       loginStatus = false;
       loginMessage = response.error
+      userID = ''
     }
 
     dispatch({
       type: actionTypes.LOGIN,
       email: email,
       loginStatus: loginStatus,
-      loginMessage: loginMessage
+      loginMessage: loginMessage,
+      loggedUserID: userID
     });
-    history.push('/');
+    history.push('/championships');
   })
   .catch(error => {
     console.error('Error:', error);
