@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Card, Segment } from 'semantic-ui-react';
 
 class Champ extends Component {
   constructor(props) {
@@ -38,11 +39,16 @@ class Champ extends Component {
   render() {
     console.log(this.state.championships);
     return (
-      <div>
-        {this.state.championships.map(champ => {
-          return <span key={champ._id}>{champ.name}</span>
-        })}
-      </div>
+      <Segment vertical>
+        <Card.Group centered>
+          {this.state.championships.map(champ => 
+            <Card key={champ._id}>
+              <Card.Header>{champ.name}</Card.Header>
+              <Card.Description>{champ.races.length} races</Card.Description>
+            </Card>
+          )}
+        </Card.Group>
+      </Segment>
     )
   }
 }
