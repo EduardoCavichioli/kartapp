@@ -90,11 +90,19 @@ class Register extends Component {
       .then(response => response.json())
       .then(response => {
         console.log('Success', JSON.stringify(response));
-        this.setState({
-          hasSubmitted: true,
-          hasRegistered: true,
-          submitMessage: 'Register Success'
-        });
+        if (response.error) {
+          this.setState({
+            hasSubmitted: true,
+            hasRegistered: false,
+            submitMessage: response.error
+          });
+        } else {
+          this.setState({
+            hasSubmitted: true,
+            hasRegistered: true,
+            submitMessage: 'Register Success'
+          });
+        }
       })
       .catch(error => {
         console.error('Error:', error);
