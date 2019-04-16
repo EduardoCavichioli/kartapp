@@ -137,6 +137,28 @@ app.post('/api/championship', (req, res) => {
   }
 });
 
+app.put('/api/championship/:id', (req, res) => {
+  let updateChamp = req.body;
+
+  if (!req.body.name) {
+    handleError(res, 'Invalid championship input', 'Must provide a name.', 400);
+  } else {
+    db.collection(CHAMP_COLLECTION).updateOne({ _id: new ObjectID(req.params.id) }, {
+      $set: {
+        name: updateChamp.name,
+        users: updateChamp.users,
+        races: updateChamp.races
+      }
+    }, (err, doc) => {
+      if (err) {
+        handleError(res, err.message, 'Failed to update championship.');
+      } else {
+        res.status(201).json(updateChamp);
+      }
+    });
+  }
+});
+
 app.get('*', function (request, response) {
   response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
 });
