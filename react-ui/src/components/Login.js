@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Segment, Grid, Header, Form, Button, Message } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
 
@@ -9,7 +9,8 @@ class Login extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      submitted: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,10 +24,15 @@ class Login extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let { email, password } = this.state;
-    this.props.onLoginButton(email, password);
+    const { history } = this.props;
+    this.props.onLoginButton(history, email, password);
+    this.setState({
+      submitted: true
+    });
   }
 
   render() {
+    let { isLogged, loginMessage } = this.props;
     return (
       <Segment style={{ padding: '4em 0em' }} vertical>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
@@ -34,6 +40,9 @@ class Login extends Component {
             <Header as='h2' textAlign='center'>
               Log In
             </Header>
+            <Message hidden={!this.state.submitted} error={!isLogged} success={isLogged}>
+              {loginMessage}
+            </Message>
             <Form size='large' onSubmit={this.handleSubmit}>
               <Form.Input
                 name='email'
@@ -63,11 +72,12 @@ class Login extends Component {
 }
 
 const mapStateToProps = store => ({
-  loggedUser: store.mainState.loggedUser
+  isLogged: store.mainState.isLogged,
+  loginMessage: store.mainState.loginMessage
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoginButton: (email, password) => { dispatch(userActions.loginButton(email, password)) }
+  onLoginButton: (history, email, password) => { dispatch(userActions.loginButton(history, email, password)) }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

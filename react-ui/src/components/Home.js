@@ -4,7 +4,36 @@ import { Link } from 'react-router-dom';
 import homeImage from '../images/homeImage.jpeg';
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      message: []
+    };
+  }
+
+  componentDidMount() {
+    fetch('/api/users')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then(json => {
+      this.setState({
+        message: json
+      });
+    })
+    .catch(e => {
+      this.setState({
+        message: 'api call failed'
+      });
+    });
+  }
+
   render() {
+    console.log(this.state.message);
     return (
       <Container fluid>
         <Segment textAlign='center' inverted vertical>
