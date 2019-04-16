@@ -9,8 +9,12 @@ class Champ extends Component {
     this.state = {
       message: '',
       championships: [],
-      loading: false
+      loading: false,
+
+      selectedChamp: undefined
     }
+
+    this.handleChampClick = this.handleChampClick.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +44,12 @@ class Champ extends Component {
     }
   }
 
+  handleChampClick(event, champ) {
+    this.setState({
+      selectedChamp: champ
+    });    
+  }
+
   render() {
     return (
       <Segment vertical>
@@ -48,12 +58,16 @@ class Champ extends Component {
         </Dimmer>
         <Card.Group centered>
           {this.state.championships.map(champ => 
-            <Card key={champ._id}>
+            <Card key={champ._id} onClick={ e => this.handleChampClick(e,champ) }>
               <Card.Header>{champ.name}</Card.Header>
               <Card.Description>{champ.races.length} races</Card.Description>
             </Card>
           )}
         </Card.Group>
+        {(this.state.selectedChamp) ? 
+          <Segment> {this.state.selectedChamp.name} </Segment> :
+          ''
+        }
       </Segment>
     )
   }
