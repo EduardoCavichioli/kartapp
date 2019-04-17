@@ -35,7 +35,9 @@ export const loginButton = (history, email, password) => (dispatch) => {
       loginMessage: loginMessage,
       loggedUserID: userID
     });
-    history.push('/championships');
+    if (loginStatus) {
+      history.push('/championships');
+    }
   })
   .catch(error => {
     console.error('Error:', error);
