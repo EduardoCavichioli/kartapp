@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Card, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import { Races } from './index';
 
 class Champ extends Component {
   constructor(props) {
@@ -65,7 +66,7 @@ class Champ extends Component {
           )}
         </Card.Group>
         {(this.state.selectedChamp) ? 
-          <Segment> {this.state.selectedChamp.name} </Segment> :
+          <Races races={this.state.selectedChamp.races} champName={this.state.selectedChamp.name} /> :
           ''
         }
       </Segment>

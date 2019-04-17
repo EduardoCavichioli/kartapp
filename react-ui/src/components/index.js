@@ -6,6 +6,7 @@ import Login from './Login';
 import Register from './Register';
 import Router from './Router';
 import Champ from './Champ';
+import Races from './Races';
 
 export {
     About,
@@ -15,5 +16,6 @@ export {
     Login,
     Register,
     Router,
-    Champ
+    Champ,
+    Races
 }
