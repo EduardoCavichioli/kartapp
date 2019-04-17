@@ -39,10 +39,10 @@ class Home extends Component {
         <Segment textAlign='center' inverted vertical>
           <Header as='h2' style={{ fontSize: '3em' }}>
             KartApp
-        </Header>
+          </Header>
           <Header as='h3'>
             A tool to manage your kart races
-        </Header>
+          </Header>
           <Button as={Link} to='/about' primary size='large'>Learn how</Button>
         </Segment>
 
